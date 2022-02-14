@@ -1,15 +1,22 @@
 import org.apache.spark.sql.SparkSession
 
+import org.apache.spark.sql._
+import scala.io.StdIn._
+
 object Main {
   def main(args: Array[String]):Unit = {
 
+    System.setProperty("hadoop.home.dir", "C:\\winutils")
 
-    val spark = SparkSession.builder()
-      .appName("I wonder if this matters")
+    val spark = SparkSession
+      .builder()
+      .appName("Project2")
       .config("spark.master", "local")
-      .enableHiveSupport()
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
+
+    val table = spark.read.json()
+
 
     val df = spark.read.json("input/yelp_academic_dataset_business.json")
     df.select("business_id").where("attributes = 'RestaurtantsTakeout'").show(1000)
@@ -20,5 +27,6 @@ object Main {
     println("howdy")
     print("Try two")
     println("twy three")
+
   }
 }
