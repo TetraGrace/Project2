@@ -1,6 +1,9 @@
 import org.apache.spark.sql._
 
 class SparkManager {
+
+  val queryManager = new QueryManager
+
   System.setProperty("hadoop.home.dir", "C:\\winutils")
 
   val spark = SparkSession.builder()
@@ -9,5 +12,7 @@ class SparkManager {
     .enableHiveSupport()
     .getOrCreate()
 
-
+  def readBusinessData(): Unit = {
+    queryManager.readBusinessData(spark)
+  }
 }

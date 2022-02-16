@@ -1,6 +1,13 @@
 
 object Main {
+
+  val sparkManager = new SparkManager
+
   def main(args: Array[String]):Unit = {
-    println("Hello World")
+    Init()
+  }
+
+  def Init():Unit = {
+    sparkManager.readBusinessData()
   }
 }
