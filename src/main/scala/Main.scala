@@ -31,7 +31,7 @@ object Main {
     print("Try two")
     println("twy three")
 
-    Init()
+
   }
 
   def Init():Unit = {
