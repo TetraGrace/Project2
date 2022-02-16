@@ -35,6 +35,10 @@ object Query2 extends App {
   val templist = Seq("True", "False")
   val t2 = df.filter(df("attributes")("RestaurantsTableService").isin(templist:_*))
   t2.show(1000)
+  val t3 = t2.select("business_id", "city", "categories", "stars", "review_count")
+  t3.show(1000)
+  val t4 = t3.select(explode(split(col("categories"), ","))).dropDuplicates().orderBy(asc("categories")).show(1000)
+
 
   //dataframe6 = dataframe1(SELECT
 }
