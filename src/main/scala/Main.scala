@@ -20,18 +20,22 @@ object Main {
     //dfRest.show()
     //println(dfRest.count)
 
-
     // Getting table of restaurants only
     val templist = Seq("True", "False")
     val tableRest = table.filter(table("attributes")("RestaurantsTableService").isin(templist:_*));
-    tableRest.show();
+    //tableRest.show();
     //println(tableRest.count())
 
     //  4. Rating to review count comparison. To gauge validity of reviews to the avg review score
-    val q4 = tableRest.select("stars","review_count");
+    val q4 = tableRest.select("business_id", "name", "stars", "review_count");
+    q4.show()
 
     //  7. Top 10 restaurants with the most checkin’s in a day
     val checkin = spark.read.json("data/yelp_academic_dataset_checkin.json")
-    checkin.show()
+    //checkin.show();
+    val temp = tableRest.join(checkin, tableRest("business_id") === checkin("business_id"), "inner");
+    val q7 = temp.select(split(col("date"), ",")).as("date_split");
+    q7.show();
+
   }
 }
