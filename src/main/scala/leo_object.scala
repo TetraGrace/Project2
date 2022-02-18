@@ -3,6 +3,8 @@ import org.apache.spark.sql.SparkSession
 import org.apache.spark.sql.functions.{col, from_json}
 import org.apache.spark.sql.types.{MapType, StringType}
 
+import scala.io.StdIn.readLine
+
 
 object project2 extends App {
 
@@ -39,5 +41,20 @@ object project2 extends App {
   //Q2.
   df.select(col("stars"), explode(split(col("categories"), ","))).groupBy("col").avg("stars").sort(col("avg(stars)").desc).show()
   //Q3.
+  def business_search:Unit= {
+    val df = spark.read.json("data/yelp_academic_dataset_business.json")
+    val df2= spark.read.json("data/yelp_academic_dataset_checkin.json")
+    df.show()
+    df2.show()
 
+    println("Please enter the business name:")
+    val business = readLine()
+    val business_df=df.select(col("name"),col("review_count"),col("stars"),col("business_id")).where(col("name")=== business)
+    business_df.show()
+    val business_id = df2.select(col("business_id")).intersect(business_df.select("business_id")).first.getString(0)
+    val checkin_df=df2.select(explode(split(col("date"),","))).where(col("business_id")===business_id)
+    checkin_df.show()
+    checkin_df.write.csv("output")
+    println(business + "total Check in times is:" + checkin_df.count())
+  }
 }
