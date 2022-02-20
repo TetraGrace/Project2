@@ -39,15 +39,11 @@ object Query2 extends App {
   // Create our ratings table which will include our category and its average rating (stars)
   spark.sql("DROP TABLE IF EXISTS ratings")
   spark.sql("CREATE TABLE IF NOT EXISTS ratings (Cuisine String, rating String)")
-  for (i <- 0 to categories.length-1){
-    var testRating = restaurantData.filter(col("categories").like(s"%${categories(i).toString().replaceAll("[\\[\\]]","")}%"))
-    var averageRating = testRating.select(round(avg("stars"), 2)).as("rating")
-    val ratings = averageRating.collect()
-    spark.sql(s"INSERT INTO ratings VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}',${ratings(0).toString().replaceAll("[\\[\\]]","")})")
-
-//    spark.sql(s"INSERT INTO ratings VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}', (SELECT rating FROM testView))")
-  }
-
+    for (i <- 0 to categories.length-1){
+      var testRating = restaurantData.filter(col("categories").like(s"%${categories(i).toString().replaceAll("[\\[\\]]","")}%"))
+      var averageRating = testRating.select(round(avg("stars"), 2)).as("rating")
+      val ratings = averageRating.collect()
+      spark.sql(s"INSERT INTO ratings VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}',${ratings(0).toString().replaceAll("[\\[\\]]","")})")
+    }
   spark.sql("SELECT * from ratings").orderBy(desc("rating")).show(1000)
-
 }
