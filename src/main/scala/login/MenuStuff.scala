@@ -48,12 +48,6 @@ object MenuStuff {
     }
   }
 
-  class SubMenu(options:List[MenuObject], parent:Menu, name:String) extends Menu(options,String) {
-    def this(option: List[MenuObject], parent: SubMenu) = this(option, parent, "")
-  }
   //this case class replaces the map and is just stores some data that is useful to menu
-  case class MenuObject(id: Int, returnVal:String, itemDesc:String){
-    def this(id:Int, returnVal: String, subMenu: SubMenu, itemDesc:String) = this(id, returnVal,itemDesc);
-  }
-
+  case class MenuObject(id: Int, returnVal:String, itemDesc:String)
 }
