@@ -40,11 +40,11 @@ object Main {
 
     //match across all locations
     println("Better than restaurants in all locations")
-    spark.sql("select count(tableRest.name) from tableRest, t1 where tableRest.stars < t1.stars and tableRest.review_count < t1.review_count").show()
+    spark.sql("select count(tableRest.name) from tableRest, t1 where tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count").show()
 
-    //match to current city only
+    //match to city only
     println("Better than restaurants in same city")
-    spark.sql("select count(tableRest.name) from tableRest, t1 where t1.city = tableRest.city and tableRest.stars < t1.stars and tableRest.review_count < t1.review_count").show()
+    spark.sql("select t1.city, count(tableRest.name) from tableRest, t1 where t1.city = tableRest.city and tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count group by t1.city").show()
 
 
     //spark.sql("select q7.business_id, SPLIT(q7.date, ',') as date_array from q7").show();
