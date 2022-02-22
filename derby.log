@@ -1,7 +1,7 @@
 ----------------------------------------------------------------
-Tue Feb 22 09:48:38 PST 2022:
-Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017f-228c-ac21-00002f3a02e0 
-on database directory D:\Revature\Week 6\Project2\Project2\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@5d84b088 
+Tue Feb 22 11:30:18 PST 2022:
+Booting Derby version The Apache Software Foundation - Apache Derby - 10.12.1.1 - (1704137): instance a816c00e-017f-22e9-c01d-000021cc2508 
+on database directory D:\Revature\Week 6\Project2\Project2\metastore_db with class loader org.apache.spark.sql.hive.client.IsolatedClientLoader$$anon$1@1c62d2ad 
 Loaded from file:/C:/Users/Cameron/AppData/Local/Coursier/cache/v1/https/repo1.maven.org/maven2/org/apache/derby/derby/10.12.1.1/derby-10.12.1.1.jar
 java.vendor=Oracle Corporation
 java.runtime.version=1.8.0_211-b12
