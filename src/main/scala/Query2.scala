@@ -28,22 +28,24 @@ object Query2 extends App {
   val categories = categoriesDF.select("Categories").collect()
 
     //Create a table to include all of our categories
-  spark.sql("DROP TABLE IF EXISTS categories")
-  spark.sql("CREATE TABLE IF NOT EXISTS categories (Cuisine String)")
-  for (i <- 0 to categories.length-1){
-    spark.sql(s"INSERT INTO categories VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}')")
-  }
+//  spark.sql("DROP TABLE IF EXISTS categories")
+//  spark.sql("CREATE TABLE IF NOT EXISTS categories (Cuisine String)")
+//  for (i <- 0 to categories.length-1){
+//    spark.sql(s"INSERT INTO categories VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}')")
+//  }
   spark.sql("SELECT * FROM categories").show(1000)
 
 
   // Create our ratings table which will include our category and its average rating (stars)
-  spark.sql("DROP TABLE IF EXISTS ratings")
-  spark.sql("CREATE TABLE IF NOT EXISTS ratings (Cuisine String, rating String)")
-    for (i <- 0 to categories.length-1){
-      var testRating = restaurantData.filter(col("categories").like(s"%${categories(i).toString().replaceAll("[\\[\\]]","")}%"))
-      var averageRating = testRating.select(round(avg("stars"), 2)).as("rating")
-      val ratings = averageRating.collect()
-      spark.sql(s"INSERT INTO ratings VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}',${ratings(0).toString().replaceAll("[\\[\\]]","")})")
-    }
-  spark.sql("SELECT * from ratings").orderBy(desc("rating")).show(1000)
+//  spark.sql("DROP TABLE IF EXISTS ratings")
+//  spark.sql("CREATE TABLE IF NOT EXISTS ratings (Cuisine String, rating String, count Int)")
+//    for (i <- 0 to categories.length-1){
+//      var testRating = restaurantData.filter(col("categories").like(s"%${categories(i).toString().replaceAll("[\\[\\]]","")}%"))
+//      var averageRating = testRating.select(round(avg("stars"), 2)).as("rating")
+//      var numberReviews = testRating.select(count("review_count").as("Total_Review_count"))
+//      val ratings = averageRating.collect()
+//      val reviews = numberReviews.collect()
+//      spark.sql(s"INSERT INTO ratings VALUES ('${categories(i).toString().replaceAll("[\\[\\]]","")}',${ratings(0).toString().replaceAll("[\\[\\]]","")},${reviews(0).toString().replaceAll("[\\[\\]]","")} )")
+//    }
+  spark.sql("SELECT * from ratings").orderBy(desc("rating"), desc("count")).show(1000)
 }
