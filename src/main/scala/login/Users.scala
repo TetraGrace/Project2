@@ -1,5 +1,5 @@
 package login
-import login.SparkManager
+import Managers.SparkManager
 import scala.io.StdIn.readLine
 
 object Users {

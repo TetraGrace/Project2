@@ -1,3 +1,5 @@
+package Managers
+
 import org.apache.spark.sql._
 
 class SparkManager {
@@ -10,8 +12,6 @@ class SparkManager {
     .appName("project2")
     .config("spark.master", "local")
     .getOrCreate()
-
-  import spark.implicits._
 
   def readBusinessData(): Unit = {
     queryManager.readBusinessData(spark)
