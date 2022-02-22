@@ -12,17 +12,20 @@ object MenuStuff {
 
     private def printMenuLine(): Unit = {
       //prints a line that goes on the top of bottom of a menu
-      var temp =""
-      for(i<-0 to menuSize) temp +="-"
-      println("+-"+ temp + "+")
+
+      var temp ="+"
+      for(i<-temp.length to menuSize-1) temp +="-"
+      println(temp + "+")
+
     }
 
     private def printMenuOption(menObj: MenuObject): Unit = {
       //Prints out a section of the menu that is a set amount of characters long.
 
       var tempStr = "| "
-      tempStr += menObj.id.toString + ">>" + menObj.returnVal
-      while (tempStr.length < (menuSize - 1)) {
+      tempStr += menObj.id.toString + ">> " + menObj.itemDesc
+      while (tempStr.length < (menuSize)) {
+
         tempStr += " "
       }
       tempStr += "|"
@@ -36,7 +39,11 @@ object MenuStuff {
 
     def printMenu(): Unit = {
       //prints the entire menu with all options
-      println("+-Options----------------------------------------+")
+
+      var temp = "+-" + menuName
+      for(i<-temp.length until menuSize) temp +="-"
+      println(temp + "+")
+
       menuOptions.foreach(m => printMenuOption(m))
       printMenuLine()
     }
@@ -47,7 +54,7 @@ object MenuStuff {
       menuOptions +=item
     }
   }
+  //Menu options are what the menuOptions are made of
 
-  //this case class replaces the map and is just stores some data that is useful to menu
   case class MenuObject(id: Int, returnVal:String, itemDesc:String)
 }
