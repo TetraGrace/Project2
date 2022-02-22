@@ -12,9 +12,11 @@ object MenuStuff {
 
     private def printMenuLine(): Unit = {
       //prints a line that goes on the top of bottom of a menu
+
       var temp ="+"
       for(i<-temp.length to menuSize-1) temp +="-"
       println(temp + "+")
+
     }
 
     private def printMenuOption(menObj: MenuObject): Unit = {
@@ -23,6 +25,7 @@ object MenuStuff {
       var tempStr = "| "
       tempStr += menObj.id.toString + ">> " + menObj.itemDesc
       while (tempStr.length < (menuSize)) {
+
         tempStr += " "
       }
       tempStr += "|"
@@ -36,9 +39,11 @@ object MenuStuff {
 
     def printMenu(): Unit = {
       //prints the entire menu with all options
+
       var temp = "+-" + menuName
       for(i<-temp.length until menuSize) temp +="-"
       println(temp + "+")
+
       menuOptions.foreach(m => printMenuOption(m))
       printMenuLine()
     }
@@ -50,5 +55,6 @@ object MenuStuff {
     }
   }
   //Menu options are what the menuOptions are made of
+
   case class MenuObject(id: Int, returnVal:String, itemDesc:String)
 }
