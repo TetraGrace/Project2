@@ -45,12 +45,15 @@ object Query6 extends App {
 
       val pickedInt = readInt ()
       var pickedFilter = ""
+      var otherFilter =""
 
       if (pickedInt == 1) {
       pickedFilter = "rating"
+        otherFilter = "count"
     }
       else {
       pickedFilter = "count"
+        otherFilter = "rating"
     }
       //**Create our data table which includes the reviews per state**
       // WARNING: If you have not created this table yet, then it will take quite a while (10-15 mins) to create. Will work on optimization if time allows.
@@ -58,44 +61,44 @@ object Query6 extends App {
       spark.sql ("DROP TABLE IF EXISTS stateRatings")
       spark.sql ("CREATE TABLE IF NOT EXISTS stateRatings (State String, Cuisine String, rating String, count Int)")
       for (i <- 0 to stateListIterator.length - 1) {
-      for (j <- 0 to categories.length - 1) {
-      var testRating = restaurantData.where (s"state = '${stateListIterator (i).toString ().replaceAll ("[\\[\\]]", "")}'").filter (col ("categories").like (s"%${categories (j).toString ().replaceAll ("[\\[\\]]", "")}%") )
-      var averageRating = testRating.select (round (avg ("stars"), 2) ).as ("rating")
-      var numberReviews = testRating.select (count ("review_count").as ("Total_Review_count") )
-      val ratings = averageRating.collect ()
-      val reviews = numberReviews.collect ()
-      spark.sql (s"INSERT INTO stateRatings VALUES ('${stateListIterator (i).toString ().replaceAll ("[\\[\\]]", "")}', '${categories (j).toString ().replaceAll ("[\\[\\]]", "")}',${ratings (0).toString ().replaceAll ("[\\[\\]]", "")},${reviews (0).toString ().replaceAll ("[\\[\\]]", "")} )")
-    }
-    }
+        for (j <- 0 to categories.length - 1) {
+        var testRating = restaurantData.where (s"state = '${stateListIterator (i).toString ().replaceAll ("[\\[\\]]", "")}'").filter (col ("categories").like (s"%${categories (j).toString ().replaceAll ("[\\[\\]]", "")}%") )
+        var averageRating = testRating.select (round (avg ("stars"), 2) ).as ("rating")
+        var numberReviews = testRating.select (count ("review_count").as ("Total_Review_count") )
+        val ratings = averageRating.collect ()
+        val reviews = numberReviews.collect ()
+        spark.sql (s"INSERT INTO stateRatings VALUES ('${stateListIterator (i).toString ().replaceAll ("[\\[\\]]", "")}', '${categories (j).toString ().replaceAll ("[\\[\\]]", "")}',${ratings (0).toString ().replaceAll ("[\\[\\]]", "")},${reviews (0).toString ().replaceAll ("[\\[\\]]", "")} )")
+        }
+      }
 
       //Case statement to match the state chosen.
       pickedState match {
         case "BC" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='BC'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='BC'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "CO" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='CO'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='CO'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "FL" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='FL'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='FL'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "GA" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='GA'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='GA'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "MA" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='MA'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='MA'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "OH" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='OH'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='OH'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "OR" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='OR'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='OR'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "TX" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='TX'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='TX'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case "WA" => {
-        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='WA'").orderBy (asc ("state"), desc (s"$pickedFilter") ).show (1000)
+        spark.sql ("SELECT * from stateRatings").where ("rating IS NOT NULL AND state='WA'").orderBy (desc (s"$pickedFilter"), desc (s"$otherFilter") ).show (1000)
       }
         case _ => {
         System.exit (0)
