@@ -8,8 +8,8 @@ object Main {
   val sparkManager = new SparkManager
 
   def main(args: Array[String]):Unit = {
-  val a1= MenuObject(1,"t1","City scoring based on businesses in that location, To determine the value of cities based on reviews")
-  val a2= MenuObject(2,"t2","Average scoring by cuisine type, To determine the success rate of type of cuisine ")
+    val a1= MenuObject(1,"t1","City scoring based on businesses in that location, To determine the value of cities based on reviews")
+    val a2= MenuObject(2,"t2","Average scoring by cuisine type, To determine the success rate of type of cuisine ")
     val menu= new Menu(List(a1,a2),"Query Menu")
     menu.addMenuOption(MenuObject(3,"t3","Popularity of business based on scores by date range to produces a trendline graph on the popularity of a store based on the check-in"))
     menu.addMenuOption(MenuObject(4,"t4","Rating to review count comparison,To gauge validity of reviews to the avg review score"))
