@@ -11,6 +11,7 @@ class SparkManager {
   val spark = SparkSession.builder()
     .appName("project2")
     .config("spark.master", "local")
+    .enableHiveSupport()
     .getOrCreate()
 
   def readBusinessData(): Unit = {

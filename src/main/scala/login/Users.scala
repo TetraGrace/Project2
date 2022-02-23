@@ -19,7 +19,7 @@ object Users {
             }
             case _ => println("please only enter y or n.")
           }}while (userIn != "y")
-        //when it gets to this point, the user ahs entered y
+        //when it gets to this point, the user has entered y
         sm.spark.sql("CREATE TABLE users (username VARCHAR(30), password VARCHAR(50), userType VARCHAR(6));")
         println("You must create a admin user. please enter a user name and password. usernames must be greater than 8 characters, and less than 30 characters. Passwords must be greater than 8 characters and less than 50 characters.")
         var breaker = true

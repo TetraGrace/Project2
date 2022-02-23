@@ -7,7 +7,7 @@ object MenuStuff {
     //map of all the map options. The int is in the position of the menu option starting at 0. The string is the return value for when its selected
     var menuOptions = options.toBuffer
     //the size of the menu, not including borders
-    val menuSize = 35
+    val menuSize = 50
     val menuName = name;
 
     private def printMenuLine(): Unit = {
