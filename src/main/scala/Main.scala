@@ -36,21 +36,25 @@ object Main {
     // Getting table of restaurants only
     val templist = Seq("True", "False")
     val tableRest = table.filter(table("attributes")("RestaurantsTableService").isin(templist:_*));
+    tableRest.createOrReplaceTempView("tableRest");
+    val total = tableRest.count()
+    //tableRest.show()
 
     //  7. Restaurant comparison metric
     println("Enter a restaurant's name:")
     val name = readLine();
-    tableRest.createOrReplaceTempView("tableRest");
 
-    spark.sql(s"create temp view t1 as select city, stars, review_count from tableRest where name = '$name'")
+
+    spark.sql(s"create temp view t1 as select name, city, stars, review_count from tableRest where name = '$name'")
 
     //match across all locations
-    println("Better than restaurants in all locations")
-    spark.sql("select count(tableRest.name) from tableRest, t1 where tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count").show()
+    println(s"Out of all $total restaurants, $name is better than:")
+    val q7p1 = spark.sql("select t1.name, t1.city, count(tableRest.name) as ranking from tableRest, t1 where t1.stars >= tableRest.stars and t1.review_count > tableRest.review_count group by t1.name, t1.city")
+    q7p1.show();
 
     //match to city only
-    println("Better than restaurants in same city")
-    spark.sql("select t1.city, count(tableRest.name) from tableRest, t1 where t1.city = tableRest.city and tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count group by t1.city").show()
+    println(s"Out of all restaurants in respective cities, $name is better than:")
+    spark.sql("select t1.name t1.city, count(tableRest.name) as ranking from tableRest, t1 where t1.city = tableRest.city and tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count group by t1.name, t1.city").show()
   }
 
 
@@ -64,7 +68,7 @@ object Main {
       .getOrCreate()
     spark.sparkContext.setLogLevel("ERROR")
     
-    q4(spark);
+    //q4(spark);
     q7(spark);
     }
 }
