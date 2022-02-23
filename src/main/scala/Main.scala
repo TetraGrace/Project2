@@ -44,7 +44,6 @@ object Main {
     println("Enter a restaurant's name:")
     val name = readLine();
 
-
     spark.sql(s"create temp view t1 as select name, city, stars, review_count from tableRest where name = '$name'")
 
     //match across all locations
