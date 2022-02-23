@@ -8,6 +8,7 @@ import scala.io.StdIn.readLine
 class UsersManagement {
   val sm = new SparkManager()
   sm.spark.sql("show tables").show
+  sm.spark.sql("select * from usertable").show
 
 
   sm.spark.sql("CREATE TABLE IF NOT EXISTS usertable (username VARCHAR(30), password VARCHAR(50), userType VARCHAR(6));")
@@ -60,9 +61,10 @@ class UsersManagement {
     val itr=collection.iterator
    // collection.foreach(println)
     while(itr.hasNext&&loop) {
-      if (input._1 == itr.next()._1 && input._2 == itr.next()._2) {
-        println("Login Successful!")
-        found = itr.next()._3.toString
+      var t=itr.next()
+      if(input._1 == t._1 && input._2 == t._2)
+       {println("Login Successful!")
+        found = t._3.toString
         loop = false
       }
     }
@@ -70,7 +72,7 @@ class UsersManagement {
       found
       else {
         println("User/password doesn't exist!")
-        null
+        "guest"
       }
     }
 

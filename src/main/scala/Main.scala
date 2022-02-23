@@ -16,41 +16,49 @@ object Main {
     menu.addMenuOption(MenuObject(5,"t5","Best restaurants & cities by avg review score and review counts, Like a top 10 restaurants listing"))
     menu.addMenuOption(MenuObject(6,"t6","Cuisine to city-level comparison, Best type of cuisine in a city based on ratings"))
     menu.addMenuOption(MenuObject(7,"t7","How a single restaurant (user-input) is positioned compared to other businesses, Ex: Restaurant A is 153rd out of all 19k restaurants based on score and review count"))
-//Starting point...
+    menu.addMenuOption(MenuObject(8,"t8","TO END"))
+
+    //Starting point...
     println("Welcome to the YELP Business Analysis tool..")
     val session=new UsersManagement
     var loop=true
 
     while(loop) {
-      val input1 = readLine("Please choose which level of user you want to add:\n1.admin \n2.normal \nPress any number to skip to Login\n")
+      val input1 = readLine("Please choose which level of user you want to add:\n1.admin \n2.normal \n3.skip to Login\nAny other number to start query\n")
       var permission = ("")
       input1.toInt match {
         case 1 => session.addAdmin
         case 2 => session.addNormal
-        case _ => permission = session.checkPermission(session.prompt)
-          println("You are logged in as " + permission + " user")
+        case 3 => permission = session.checkPermission(session.prompt)
+          println("You are logged in as " + permission + " user!")
           if (permission == "admin") {
             println("You have the permission to see users/password table as below:")
             session.showTable
           }
-          else println("You do not have permission as a normal user!")
+          else if (permission=="normal") {
+            println("You do not have permission as a normal user!")
+          }
+          else println("You are a guest!")
+        case _ => println("Now, proceed to queries....")
+        loop=false
       }
     }
-
-    println("Now, proceed to queries....")
-    menu.printMenu()
-  val input=readLine("Please enter your selection:\n").toInt
-    input match {
-      case 1 => println("Q1")
-      case 2 => println("Q2")
-      case 3 =>
-      case 4 =>
-      case 5 =>
-      case 6 =>
-      case 7 =>
+    var loop1=true
+    while(loop1) {
+      menu.printMenu()
+      val input = readLine("Please enter your selection:\n").toInt
+      input match {
+        case 1 => println("Q1")
+        case 2 => println("Q2")
+        case 3 =>
+        case 4 =>
+        case 5 =>
+        case 6 =>
+        case 7 =>
+        case 8 => loop1=false
+      }
     }
-
-
+    println("Thanks for using Yelp query, good bye!")
 
     Init()
 
