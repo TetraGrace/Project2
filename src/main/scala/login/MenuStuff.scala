@@ -23,14 +23,42 @@ object MenuStuff {
       //Prints out a section of the menu that is a set amount of characters long.
 
       var tempStr = "| "
-      tempStr += menObj.id.toString + ">> " + menObj.itemDesc
-      while (tempStr.length < (menuSize)) {
+      tempStr += menObj.id.toString + ">>"
+      val selLen = tempStr.length
+      if((selLen + menObj.itemDesc.length) < menuSize){
+        tempStr += menObj.itemDesc
+        while (tempStr.length < (menuSize)) {
+
+          tempStr += " "
+        }
+        tempStr += "|"
+        println(tempStr)
+        return
+      }
+      var charLeft = menuSize - (tempStr.length+1)
+
+        for(i <- 0 until menObj.itemDesc.length){
+          if((tempStr.length%menuSize) > 0){
+            tempStr += menObj.itemDesc(i)
+
+          } else {
+            tempStr+= menObj.itemDesc(i) +" \n|   "
+
+          }
+        }
+      while((tempStr.length%menuSize) != 0) {
+        tempStr += " "
+      }
+      tempStr += "  "
+      /*while (tempStr.length < (menuSize)) {
 
         tempStr += " "
       }
-      tempStr += "|"
+      tempStr += "|"*/
       println(tempStr)
     }
+
+
 
     private def printEmptyMenuLine(): Unit = {
       //prints and empty menu line to avoid confusion
@@ -40,7 +68,7 @@ object MenuStuff {
     def printMenu(): Unit = {
       //prints the entire menu with all options
 
-      var temp = "+-" + menuName
+      var temp = "+--" + menuName
       for(i<-temp.length until menuSize) temp +="-"
       println(temp + "+")
 
