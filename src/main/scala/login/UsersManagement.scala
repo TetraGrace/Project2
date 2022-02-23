@@ -53,10 +53,21 @@ class UsersManagement {
   }
 
   def checkPermission(input:(String,String)):String= {
-    var found = " "
-    var loop = true
-    val table = sm.spark.sql("select * from usertable")
-    val collection = table.rdd.map(x=>(x.get(0),x.get(1),x.get(2))).collect
+    /*var found = " "
+    var loop = true*/
+    val table = sm.spark.sql(s"SELECT * FROM usertable where username ='${input._1}' and password = '${input._2}';")
+    table.show()
+    if(table.count()!= 1){
+      //if the table returns anything other than one, than we know it didn't get a result
+      println("User/password doesn't exist!")
+      return null
+    }
+    //if the count is 1, then there was a match and we need to continue on.
+    println("Login Successful")
+    table.select("userType").first().mkString
+
+
+    /*val collection = table.rdd.map(x=>(x.get(0),x.get(1),x.get(2))).collect
     val itr=collection.iterator
    // collection.foreach(println)
     while(itr.hasNext&&loop) {
@@ -71,7 +82,7 @@ class UsersManagement {
       else {
         println("User/password doesn't exist!")
         null
-      }
+      }*/
     }
 
 }

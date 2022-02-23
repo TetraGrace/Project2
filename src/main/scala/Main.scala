@@ -32,8 +32,10 @@ object Main {
           if (permission == "admin") {
             println("You have the permission to see users/password table as below:")
             session.showTable
+            loop = false
           }
-          else println("You do not have permission as a normal user!")
+          else {println("You do not have permission as a normal user!"); loop = false}
+
       }
     }
 
