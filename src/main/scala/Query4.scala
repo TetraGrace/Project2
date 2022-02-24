@@ -2,6 +2,7 @@ import org.apache.spark.sql.functions._
 import org.apache.spark.sql.SparkSession
 
 object Query4 extends App {
+    /*
     System.setProperty("hadoop.home.dir", "c:/winutils")
     val spark = SparkSession
       .builder()
@@ -9,10 +10,11 @@ object Query4 extends App {
       .config("spark.master", "local")
       .enableHiveSupport()
       .getOrCreate()
-
+      
     val table = spark.read.json("data/yelp_academic_dataset_business.json")
+    */
 
-    def q4(spark:SparkSession):Unit = {
+    def q4(spark:SparkSession, table:DataFrame):Unit = {
         val df = table.select(col("attributes.*")) //all attributes
         val dfRest = df.filter(col("RestaurantsTakeOut") === "True" || col("RestaurantsTakeOut") === "False")
 
