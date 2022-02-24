@@ -5,7 +5,7 @@ import org.apache.spark.sql.types.DecimalType
 
 import scala.io.StdIn._
 
-object Main {
+object q47 {
 
   //query 4
   def q4(spark:SparkSession):Unit = {
@@ -64,7 +64,7 @@ object Main {
     city_locations.show();
   }
 
-
+  /*
   def main(args: Array[String]):Unit = {
     System.setProperty("hadoop.home.dir", "C:\\winutils")
     
@@ -78,4 +78,5 @@ object Main {
     //q4(spark);
     q7(spark);
     }
+    */
 }
