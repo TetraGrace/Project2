@@ -7,16 +7,16 @@ import scala.io.StdIn.readLine
 
 object Q3 extends App {
 
-  System.setProperty("hadoop.home.dir", "c:/winutils")
-  val spark = SparkSession
-    .builder()
-    .appName("project1")
-    .config("spark.master", "local")
-    .enableHiveSupport()
-    .getOrCreate()
+//   System.setProperty("hadoop.home.dir", "c:/winutils")
+//   val spark = SparkSession
+//     .builder()
+//     .appName("project1")
+//     .config("spark.master", "local")
+//     .enableHiveSupport()
+//     .getOrCreate()
 
-  val df = spark.read.json("data/yelp_academic_dataset_business.json").persist(StorageLevel.MEMORY_ONLY_SER)
-  val df2= spark.read.json("data/yelp_academic_dataset_checkin.json").persist(StorageLevel.MEMORY_ONLY_SER)
+//   val df = spark.read.json("data/yelp_academic_dataset_business.json").persist(StorageLevel.MEMORY_ONLY_SER)
+//   val df2= spark.read.json("data/yelp_academic_dataset_checkin.json").persist(StorageLevel.MEMORY_ONLY_SER)
 
   println("Please enter the business name:")
   val business = readLine()
