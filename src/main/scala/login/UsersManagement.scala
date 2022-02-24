@@ -7,11 +7,10 @@ import scala.util.matching.Regex
 import scala.io.StdIn.readLine
 class UsersManagement {
   val sm = new SparkManager()
+  sm.spark.sql("CREATE TABLE IF NOT EXISTS usertable (username VARCHAR(30), password VARCHAR(50), userType VARCHAR(6));")
   sm.spark.sql("show tables").show
   sm.spark.sql("select * from usertable").show
 
-
-  sm.spark.sql("CREATE TABLE IF NOT EXISTS usertable (username VARCHAR(30), password VARCHAR(50), userType VARCHAR(6));")
   def addAdmin:Unit={
     val validation = "(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z]).{8,20}".r
     println("Please create admin username and password:")
@@ -49,7 +48,7 @@ class UsersManagement {
 
   def prompt:(String,String)={
     val user=readLine("Please enter username:")
-    val pass=readLine("PLease enter password:")
+    val pass=readLine("Please enter password:")
     (user,pass)
   }
 
