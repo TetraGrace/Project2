@@ -56,5 +56,4 @@ object Query2 extends App {
     df2.createTempView("ratings")
     spark.sql("SELECT * from ratings").orderBy(desc("rating"), desc("count")).show(200)
   }
-  query2()
 }

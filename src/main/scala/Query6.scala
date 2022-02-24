@@ -110,5 +110,4 @@ object Query6 extends App {
 //      }
 //    }
   }
-  query6()
 }
