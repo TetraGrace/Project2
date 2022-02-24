@@ -13,18 +13,14 @@ object q47 {
 
     val df=table.select(col("attributes.*")) //all attributes
     val dfRest=df.filter(col("RestaurantsTakeOut") === "True" || col("RestaurantsTakeOut") === "False")
-    //dfRest.show()
-    //println(dfRest.count)
 
     // Getting table of restaurants only
     val templist = Seq("True", "False")
     val tableRest = table.filter(table("attributes")("RestaurantsTableService").isin(templist:_*));
-    //tableRest.show();
-    //println(tableRest.count())
 
     //  4. Rating to review count comparison. To gauge validity of reviews to the avg review score
     val q4 = tableRest.select("business_id", "name", "stars", "review_count");
-    q4.show();
+    //q4.show();
   }
 
 
@@ -40,7 +36,6 @@ object q47 {
     val tableRest = table.filter(table("attributes")("RestaurantsTableService").isin(templist:_*));
     tableRest.createOrReplaceTempView("tableRest");
     val total = tableRest.count()
-    //tableRest.show()
 
     //  7. Restaurant comparison metric
     println("Enter a restaurant's name:")
@@ -53,7 +48,7 @@ object q47 {
     val q7 = spark.sql("select t1.name, t1.city, count(tableRest.name) as better from tableRest, t1 where t1.stars >= tableRest.stars and t1.review_count > tableRest.review_count group by t1.name, t1.city")
     val q7t1 = q7.withColumn("total", lit(total));
     val all_locations = q7t1.withColumn("percentile", col("better") / col("total") * 100);
-    all_locations.show();
+    //all_locations.show();
 
     //match to city only
     println(s"Out of all restaurants in respective cities, $name is better than:")
@@ -61,7 +56,7 @@ object q47 {
     val t2 = spark.sql("select tableRest.city as city, count(tableRest.city) as city_count from tableRest join t1 on tableRest.city = t1.city group by tableRest.city")
     val q7t4 = q7t3.join(t2, "city")
     val city_locations = q7t4.withColumn("percentile", col("ranking") / col("city_count") * 100)
-    city_locations.show();
+    //city_locations.show();
   }
 
   /*
