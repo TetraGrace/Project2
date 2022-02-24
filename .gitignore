@@ -4,6 +4,7 @@
 /project/project/
 /target/
 /metastore_db/
-/data/yelp_academic_dataset_business.json
+/data/
 extracode.txt
 derby.log
+.gitignore
