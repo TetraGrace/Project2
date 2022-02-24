@@ -6,3 +6,4 @@
 /data/
 /metastore_db/
 extracode.txt
+derby.log
