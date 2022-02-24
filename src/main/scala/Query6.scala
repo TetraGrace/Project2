@@ -7,19 +7,19 @@ import scala.io.StdIn.{readLine, readInt}
 
 object Query6 extends App {
 
-  System.setProperty("hadoop.home.dir", "c:/winutils")
-  val spark = SparkSession
-    .builder()
-    .appName("project1")
-    .config("spark.master", "local")
-    .enableHiveSupport()
-    .getOrCreate()
-  spark.sparkContext.setLogLevel("ERROR")
+//   System.setProperty("hadoop.home.dir", "c:/winutils")
+//   val spark = SparkSession
+//     .builder()
+//     .appName("project1")
+//     .config("spark.master", "local")
+//     .enableHiveSupport()
+//     .getOrCreate()
+//   spark.sparkContext.setLogLevel("ERROR")
 
-  def query6(): Unit ={
+  def query6(spark: SparkSession, df: DataFrame): Unit ={
 
       //LOAD OUR DATA IN FROM YELP
-      val df = spark.read.json ("data/yelp_academic_dataset_business.json")
+//       val df = spark.read.json ("data/yelp_academic_dataset_business.json")
 
       //Create our list of restaurants (Yelp Data includes many more services than restaurants)
       val templist = Seq ("True", "False")
