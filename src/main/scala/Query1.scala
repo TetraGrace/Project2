@@ -14,7 +14,7 @@ object Q1 extends App {
 
 //  val df = spark.read.json("data/yelp_academic_dataset_business.json")
 
-  def Q1: Unit = {
+  def Q1(spark:SparkSession, table:DataFrame): Unit = {
     val buscount = df.groupBy(col("city")).agg(count("city").as("business_count")).sort(col("business_count").desc)
     buscount.show()
     val review = df.groupBy(col("city")).agg(sum("review_count").as("reviewsum")).sort(col("reviewsum").desc)
