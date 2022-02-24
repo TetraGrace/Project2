@@ -51,4 +51,5 @@ object Query2 extends App {
     }
     spark.sql("SELECT * from ratings").orderBy(desc("rating"), desc("count")).show(1000)
   }
+  query2()
 }
