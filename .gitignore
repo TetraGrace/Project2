@@ -3,7 +3,7 @@
 /project/target/
 /project/project/
 /target/
-/data/
 /metastore_db/
+/data/yelp_academic_dataset_business.json
 extracode.txt
 derby.log
