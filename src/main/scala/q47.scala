@@ -1,8 +1,5 @@
-
 import org.apache.spark.sql.functions._
 import org.apache.spark.sql.SparkSession
-import org.apache.spark.sql.types.DecimalType
-
 import scala.io.StdIn._
 
 object q47 {
