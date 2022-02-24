@@ -7,7 +7,7 @@ object MenuStuff {
     //map of all the map options. The int is in the position of the menu option starting at 0. The string is the return value for when its selected
     var menuOptions = options.toBuffer
     //the size of the menu, not including borders
-    val menuSize = 50
+    val menuSize = 175
     val menuName = name;
 
     private def printMenuLine(): Unit = {
@@ -28,7 +28,6 @@ object MenuStuff {
       if((selLen + menObj.itemDesc.length) < menuSize){
         tempStr += menObj.itemDesc
         while (tempStr.length < (menuSize)) {
-
           tempStr += " "
         }
         tempStr += "|"
@@ -62,7 +61,12 @@ object MenuStuff {
 
     private def printEmptyMenuLine(): Unit = {
       //prints and empty menu line to avoid confusion
-      println("|                                                |")
+      var tempString = "|"
+      for (i <- 0 to menuSize-2){
+        tempString+=" "
+      }
+      tempString+= "|"
+      println(tempString)
     }
 
     def printMenu(): Unit = {
@@ -72,7 +76,7 @@ object MenuStuff {
       for(i<-temp.length until menuSize) temp +="-"
       println(temp + "+")
 
-      menuOptions.foreach(m => printMenuOption(m))
+      menuOptions.foreach(m => {printMenuOption(m);printEmptyMenuLine()})
       printMenuLine()
     }
     def selectOption(cho: Int):String = {
