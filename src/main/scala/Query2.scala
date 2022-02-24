@@ -6,23 +6,23 @@ import org.apache.spark.sql.functions.{from_json,col}
 
 object Query2 extends App {
 
-  System.setProperty("hadoop.home.dir", "c:/winutils")
-  val spark = SparkSession
-    .builder()
-    .appName("project1")
-    .config("spark.master","local")
-    .enableHiveSupport()
-    .getOrCreate()
-  spark.sparkContext.setLogLevel("ERROR")
+//   System.setProperty("hadoop.home.dir", "c:/winutils")
+//   val spark = SparkSession
+//     .builder()
+//     .appName("project1")
+//     .config("spark.master","local")
+//     .enableHiveSupport()
+//     .getOrCreate()
+//   spark.sparkContext.setLogLevel("ERROR")
 
-  def query2(): Unit= {
+  def query2(spark: SparkSession, table: DataFrame): Unit= {
 
     //LOAD OUR DATA IN FROM YELP
-    val df = spark.read.json("data/yelp_academic_dataset_business.json")
+//     val df = spark.read.json("data/yelp_academic_dataset_business.json")
 
     //Create our list of restaurants (Yelp Data includes many more services than restaurants)
     val templist = Seq("True", "False")
-    val restaurantList = df.filter(df("attributes")("RestaurantsTableService").isin(templist: _*))
+    val restaurantList = table.filter(table("attributes")("RestaurantsTableService").isin(templist: _*))
     val restaurantData = restaurantList.select("business_id", "city", "categories", "stars", "review_count")
 
     //Create our list of possible cuisine types (filtered manually to remove things like 'Laser Tag')
