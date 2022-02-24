@@ -4,6 +4,7 @@ import scala.io.StdIn._
 
 
 object Query7 extends App {
+    /*
     System.setProperty("hadoop.home.dir", "c:/winutils")
     val spark = SparkSession
       .builder()
@@ -13,8 +14,9 @@ object Query7 extends App {
       .getOrCreate()
 
     val table = spark.read.json("data/yelp_academic_dataset_business.json")
+    */
 
-    def q7(spark:SparkSession):Unit = {
+    def q7(spark:SparkSession, table:DataFrame):Unit = {
         val table = spark.read.json("data/yelp_academic_dataset_business.json")
 
         val df=table.select(col("attributes.*")) //all attributes
