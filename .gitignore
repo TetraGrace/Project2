@@ -3,5 +3,7 @@
 /project/target/
 /project/project/
 /target/
-
+/data/yelp_academic_dataset_checkin.json
+/data/yelp_academic_dataset_business.json
 /derby.log
+/metastore_db/
