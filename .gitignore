@@ -3,8 +3,5 @@
 /project/target/
 /project/project/
 /target/
-/metastore_db/
-/data/
-extracode.txt
-derby.log
-.gitignore
+
+/derby.log
