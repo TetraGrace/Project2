@@ -1,6 +1,9 @@
 import Managers.SparkManager
 import login.MenuStuff.{Menu, MenuObject}
 import login.UsersManagement
+import Queries._
+import org.apache.spark.sql.SparkSession
+import org.apache.spark.sql.DataFrame
 
 import scala.io.StdIn.readLine
 object Main {
@@ -8,6 +11,18 @@ object Main {
   val sparkManager = new SparkManager
 
   def main(args: Array[String]):Unit = {
+
+       System.setProperty("hadoop.home.dir", "c:/winutils")
+       val spark = SparkSession
+         .builder()
+         .appName("project1")
+         .config("spark.master","local")
+         .enableHiveSupport()
+         .getOrCreate()
+       spark.sparkContext.setLogLevel("ERROR")
+
+    val df = spark.read.json("data/yelp_academic_dataset_business.json")
+
   val a1= MenuObject(1,"t1","City scoring based on businesses in that location, To determine the value of cities based on reviews")
   val a2= MenuObject(2,"t2","Average scoring by cuisine type, To determine the success rate of type of cuisine ")
     val menu= new Menu(List(a1,a2),"Query Menu")
@@ -48,26 +63,23 @@ object Main {
     def query:Unit= {
       var loop1 = true
       while (loop1) {
+        println()
+        println("============================================================")
+        println()
         menu.printMenu()
         val input = readLine("Please enter your selection:\n").toInt
         input match {
-          case 1 => println("Q1")
-          case 2 => println("Q2")
-          case 3 =>
-          case 4 =>
-          case 5 =>
-          case 6 =>
-          case 7 =>
+          case 1 => Query1.Q1(spark, df)
+          case 2 => Query2.query2(spark,df)
+          case 3 => Query3.q3(spark, df)
+          case 4 => Query4.q4(spark, df)
+          case 5 => Query5.readBusinessData(spark,df)
+          case 6 => Query6.query6(spark, df)
+          case 7 => Query7.q7(spark, df)
           case 8 => loop1 = false
         }
       }
       println("Thanks for using Yelp query, good bye!")
     }
-    Init()
-
-  }
-
-  def Init():Unit = {
-    sparkManager.readBusinessData()
   }
 }
