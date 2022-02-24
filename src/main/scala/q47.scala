@@ -45,17 +45,17 @@ object q47 {
 
     //match across all locations
     println(s"Out of all $total restaurants, $name is better than:")
-    val q7 = spark.sql("select t1.name, t1.city, count(tableRest.name) as better from tableRest, t1 where t1.stars >= tableRest.stars and t1.review_count > tableRest.review_count group by t1.name, t1.city")
+    val q7 = spark.sql("select t1.name, t1.city, count(tableRest.name) as better_than from tableRest, t1 where t1.stars >= tableRest.stars and t1.review_count > tableRest.review_count group by t1.name, t1.city")
     val q7t1 = q7.withColumn("total", lit(total));
-    val all_locations = q7t1.withColumn("percentile", col("better") / col("total") * 100);
+    val all_locations = q7t1.withColumn("percentile", col("better_than") / col("total") * 100);
     //all_locations.show();
 
     //match to city only
     println(s"Out of all restaurants in respective cities, $name is better than:")
-    val q7t3 = spark.sql("select t1.name, t1.city, count(tableRest.name) as ranking from tableRest, t1 where t1.city = tableRest.city and tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count group by t1.name, t1.city")
+    val q7t3 = spark.sql("select t1.name, t1.city, count(tableRest.name) as better_than from tableRest, t1 where t1.city = tableRest.city and tableRest.stars <= t1.stars and tableRest.review_count < t1.review_count group by t1.name, t1.city")
     val t2 = spark.sql("select tableRest.city as city, count(tableRest.city) as city_count from tableRest join t1 on tableRest.city = t1.city group by tableRest.city")
     val q7t4 = q7t3.join(t2, "city")
-    val city_locations = q7t4.withColumn("percentile", col("ranking") / col("city_count") * 100)
+    val city_locations = q7t4.withColumn("percentile", col("better_than") / col("city_count") * 100)
     //city_locations.show();
   }
 
