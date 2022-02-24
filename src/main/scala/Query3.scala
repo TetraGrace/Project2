@@ -17,7 +17,7 @@ object Q3 extends App {
 
 //   val df = spark.read.json("data/yelp_academic_dataset_business.json").persist(StorageLevel.MEMORY_ONLY_SER)
 //   val df2= spark.read.json("data/yelp_academic_dataset_checkin.json").persist(StorageLevel.MEMORY_ONLY_SER)
-
+def Q3(spark:SparkSession, table:DataFrame):Unit={
   println("Please enter the business name:")
   val business = readLine()
   val business_df=df.select(col("name"),col("review_count"),col("stars"),col("business_id")).where(col("name")=== business)
@@ -31,4 +31,5 @@ object Q3 extends App {
 
   //checkin_df.write.csv("output")
   println(business + "total Check in times is:" + checkin_df.count())
+  }
 }
